@@ -1,14 +1,12 @@
 struct Node{
     Node* links[26];
     bool flag=false;
-
     Node(){
         for(int i=0;i<26;i++) links[i]=NULL;
     }
     bool containskey(char ch){
         return (links[ch-'a']!=NULL);
     }
-
     void put(char ch,Node* node){
         links[ch-'a']=node;
     }
@@ -22,6 +20,7 @@ struct Node{
         return flag;
     }
 };
+
 class Trie {
 private:
 Node* root;
@@ -47,18 +46,22 @@ public:
             if(!node->containskey(word[i])){
                 return false;
             }
-            node=node->get(word[i]);
+            else{
+                node=node->get(word[i]);
+            }
         }
         return node->isend();
     }
     
     bool startsWith(string prefix) {
         Node* node=root;
-        for(int i=0;i<prefix.length();i++){
+        for(int i=0;i<prefix.size();i++){
             if(!node->containskey(prefix[i])){
                 return false;
             }
-            node=node->get(prefix[i]);
+            else{
+                node=node->get(prefix[i]);
+            }
         }
         return true;
     }
