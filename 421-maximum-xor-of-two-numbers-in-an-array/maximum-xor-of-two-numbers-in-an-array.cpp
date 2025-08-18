@@ -1,5 +1,6 @@
 struct Node{
     Node* links[2];
+    bool flag=false;
     Node(){
         for(int i=0;i<2;i++) links[i]=NULL;
     }
@@ -13,6 +14,7 @@ struct Node{
         return links[bit];
     }
 };
+
 class Trie{
     private:
     Node* root;
@@ -20,44 +22,42 @@ class Trie{
     Trie(){
         root=new Node();
     }
-    void insert(int num){
+    void insert(int number){
         Node* node=root;
         for(int i=31;i>=0;i--){
-            int bit=(num>>i)&1;
+            int bit=(number>>i)&1;
             if(!node->containskey(bit)){
                 node->put(bit,new Node());
             }
             node=node->get(bit);
         }
     }
-    int getmax(int num){
+    int maxget(int word){
         Node* node=root;
-        int maxsum=0;
+        int getmax=0;
         for(int i=31;i>=0;i--){
-            int bit=(num>>i)&1;
+            int bit=(word>>i)&1;
             if(node->containskey(1-bit)){
-                maxsum=maxsum|(1<<i);
+                getmax=getmax | (1<<i);
                 node=node->get(1-bit);
             }
             else{
                 node=node->get(bit);
             }
         }
-        return maxsum;
+        return getmax;
     }
 };
 class Solution {
 public:
     int findMaximumXOR(vector<int>& nums) {
         Trie trie;
-        int n=nums.size();
+        int maxi=0;
         for(auto &it:nums){
             trie.insert(it);
         }
-
-        int maxi=0;
         for(auto &it:nums){
-            maxi=max(maxi,trie.getmax(it));
+            maxi=max(maxi,trie.maxget(it));
         }
         return maxi;
     }
