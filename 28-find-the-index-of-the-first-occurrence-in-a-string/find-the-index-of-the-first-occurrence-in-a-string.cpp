@@ -39,21 +39,22 @@ class Solution {
 public:
     // Build LPS (Longest Prefix Suffix) array
     vector<int> buildLPS(string &pattern) {
-        int m = pattern.size();
-        vector<int> lps(m, 0);
-        int len = 0;  // length of previous longest prefix suffix
-        int i = 1;
-
-        while (i < m) {
-            if (pattern[i] == pattern[len]) {
+        int m=pattern.size();
+        vector<int> lps(m,0);
+        int len=0;
+        int i=1;
+        while(i<m){
+            if(pattern[i]==pattern[len]){
                 len++;
-                lps[i] = len;
+                lps[i]=len;
                 i++;
-            } else {
-                if (len != 0) {
-                    len = lps[len - 1];  // fallback
-                } else {
-                    lps[i] = 0;
+            }
+            else{
+                if(len!=0){
+                    len=lps[len-1];
+                }
+                else{
+                    lps[i]=0;
                     i++;
                 }
             }
@@ -66,24 +67,27 @@ public:
         int m = needle.size();
         if (m == 0) return 0;
 
-        vector<int> lps = buildLPS(needle);
-        int i = 0, j = 0;  // i for haystack, j for needle
-
-        while (i < n) {
-            if (haystack[i] == needle[j]) {
+        vector<int> lps=buildLPS(needle);  // not found
+        int i=0,j=0;
+        while(i<n){
+            if(haystack[i]==needle[j]){
                 i++;
                 j++;
-                if (j == m) {
-                    return i - j;  // found match
+                if(j==m){
+                    return i-j;
                 }
-            } else {
-                if (j != 0) {
-                    j = lps[j - 1];  // fallback
-                } else {
+            }
+            else{
+                if(j!=0){
+                    j=lps[j-1];
+                }
+                else{
                     i++;
                 }
             }
         }
-        return -1;  // not found
+        return -1;
     }
 };
+
+
